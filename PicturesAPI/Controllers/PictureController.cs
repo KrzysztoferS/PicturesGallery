@@ -97,9 +97,13 @@ namespace PicturesAPI.Controllers
             List<Picture> picList = new List<Picture>();
             User user = _dbContext.Users.Where(c => c.email == userEmail).FirstOrDefault();
 
-            picList = _dbContext.Pictures.Where(e => e.OwnerId == user.Id).ToList();
-            
-            return picList;
+            if (user != null)
+            {
+                picList = _dbContext.Pictures.Where(e => e.OwnerId == user.Id).ToList();
+
+                return picList;
+            }
+            else return null;
         }
     }
 }

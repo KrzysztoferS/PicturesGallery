@@ -43,7 +43,8 @@ namespace PicturesAPI.Controllers
         [HttpPost("form")]
         public async Task<IActionResult> OnPostForm([FromForm] UploadFile file)
         {
-            
+            if (file.Picture != null)
+            {
                 var filePath = Path.Combine("C:\\APIFiles", Path.GetRandomFileName());
 
 
@@ -51,8 +52,8 @@ namespace PicturesAPI.Controllers
                 {
                     await file.Picture.CopyToAsync(stream);
                 }
-                
-            
+
+            }
             return Ok(new { file.Title, file.Picture.FileName  });
         }
     }

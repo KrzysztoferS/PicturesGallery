@@ -12,7 +12,5 @@ namespace PicturesAPI.Models
         public string Name { get; set; }
         public string Password { get; set; }
         public string email { get; set; }
-
-        public ICollection<PictureDTO> Pictures { get; set; }
     }
 }

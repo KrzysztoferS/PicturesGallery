@@ -39,5 +39,27 @@ namespace PicturesAPI.Controllers
 
             return Ok(new { count = files.Count, size, path }) ;
         }
+
+        [HttpPost("form")]
+        public async Task<IActionResult> OnPostForm([FromForm] UploadFile file)
+        {
+            
+                var filePath = Path.Combine("C:\\APIFiles", Path.GetRandomFileName());
+
+
+                using (var stream = System.IO.File.Create(filePath))
+                {
+                    await file.Picture.CopyToAsync(stream);
+                }
+                
+            
+            return Ok(new { file.Title, file.Picture.FileName  });
+        }
+    }
+
+    public class UploadFile
+    {
+        public string Title { get; set; }
+        public IFormFile Picture { get; set; }
     }
 }

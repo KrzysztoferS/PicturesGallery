@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AzureBlobSotrage\AzureBlobSotrage.csproj" />
     <ProjectReference Include="..\Database\Database.csproj" />
   </ItemGroup>
 

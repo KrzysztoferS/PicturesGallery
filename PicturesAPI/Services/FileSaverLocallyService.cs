@@ -10,7 +10,7 @@ namespace PicturesAPI.Services
 {
     public class FileSaverLocallyService : IFileSaver
     {
-        public async Task<string> SaveFile(IFormFile file, string name)
+        public async Task<string> SaveFile(IFormFile file, string ownerId)
         {
             if (file != null)
             {

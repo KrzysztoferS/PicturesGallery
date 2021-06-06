@@ -8,7 +8,7 @@ namespace PicturesAPI.Models
 {
     public class PictureDTO
     {
-        //zakomentowane sa wlasciwosci ustalane przes serwisy lub baze danych nie prze klienta
+        //zakomentowane sa wlasciwosci ustalane przes serwisy lub baze danych nie przez klienta
         //public Guid Id { get; set; }
 
         public string Title { get; set; }

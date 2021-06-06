@@ -56,7 +56,7 @@ namespace PicturesAPI.Controllers
             return id;
         }
 
-        [HttpPut("id")]
+        [HttpPut("{id}")]
         public void PutUser(Guid id, [FromBody] UserDTO value)
         {
             var entity = _dbContext.Users.SingleOrDefault(e => e.Id == id);

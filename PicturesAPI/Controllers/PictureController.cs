@@ -63,8 +63,32 @@ namespace PicturesAPI.Controllers
        [HttpPost("{userEmail}")]
        public async Task<IActionResult> PostPicture([FromForm] PictureDTO picture, string userEmail)
        {
-           string ret = "wywoalels metoe ziomek";
-           return Ok(new { ret});
+            //Sprawdza czy uzytkownik o podanym mailu istnieje
+            User user = _dbContext.Users.Where(e => e.email == userEmail).FirstOrDefault();
+            if (user == null) return Problem("User not found");
+
+            //Sprawdza czy podany plik nie jest pusty, jesli nie zapisuje go i dodaje link do pliku do bazy
+            if (picture.File != null)
+            {
+                Guid id = Guid.NewGuid();
+                string filePath = await _fileSaver.SaveFile(picture.File, id.ToString());
+                Picture _picture = new Picture
+                {
+                    Id = id,
+                    Title = picture.Title,
+                    Url = filePath,
+                    Description = picture.Description,
+                    Tags = picture.Tags,
+                    DateAdded = DateTime.Now,
+                    OwnerId = user.Id
+                };
+
+                _dbContext.Pictures.Add(_picture);
+                await _dbContext.SaveChangesAsync();
+
+                return Ok(new { filePath });
+            }
+            else return Problem("No picture file provided");
        }
         
         [HttpGet("{userEmail}")]

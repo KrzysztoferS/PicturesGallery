@@ -1,7 +1,10 @@
-﻿using Database;
+﻿
+using Database;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PicturesAPI.Abstraction;
 using PicturesAPI.Models;
+using PicturesAPI.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +19,7 @@ namespace PicturesAPI.Controllers
     {
         DatabaseContext _dbContext;
         IFileSaver _fileSaver;
+        //StorageController _storageController = new StorageController();
 
         public PictureController(DatabaseContext dbContext, IFileSaver fileSaver)
         {
@@ -90,7 +94,24 @@ namespace PicturesAPI.Controllers
             }
             else return Problem("No picture file provided");
        }
-        
+
+        [HttpPost("Azure")]
+        public async Task<IActionResult> PostPictureToAzure( string filePath)
+        {
+            AzureBlobService storage = new AzureBlobService();
+            string  _filePath =@$"{storage.BlobCreateTest(filePath)}";
+            
+            return Ok(_filePath);
+        }
+
+        [HttpPost("AzureFile")]
+        public async Task<IActionResult> PostFile(IFormFile file)
+        {
+            AzureBlobService storage = new AzureBlobService();
+            string link=storage.BlobCreateTest(file);
+            return Ok(link);
+        }
+
         [HttpGet("{userEmail}")]
         public ActionResult<IEnumerable<Picture>> GetUserPictures(string userEmail)
         {

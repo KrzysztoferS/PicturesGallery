@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Database", "Database\Databa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PicturesAPI", "PicturesAPI\PicturesAPI.csproj", "{F44E9FFD-647D-4DAE-B869-483477D595D3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureBlobSotrage", "AzureBlobSotrage\AzureBlobSotrage.csproj", "{D03126AF-8E26-494C-97D9-2148687BD0C9}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +21,6 @@ Global
 		{F44E9FFD-647D-4DAE-B869-483477D595D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F44E9FFD-647D-4DAE-B869-483477D595D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F44E9FFD-647D-4DAE-B869-483477D595D3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D03126AF-8E26-494C-97D9-2148687BD0C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D03126AF-8E26-494C-97D9-2148687BD0C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D03126AF-8E26-494C-97D9-2148687BD0C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D03126AF-8E26-494C-97D9-2148687BD0C9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

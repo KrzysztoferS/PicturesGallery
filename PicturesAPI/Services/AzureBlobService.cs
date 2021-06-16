@@ -14,7 +14,7 @@ namespace PicturesAPI.Services
     {
         public async Task<string> SaveFile(IFormFile file, string name)
         {
-            string container = "ddd";
+            string container = name;
             if (file != null)
             {
                 BlobContainerClient blobContainerClient = new BlobContainerClient(_connectionString, container);
@@ -43,45 +43,45 @@ namespace PicturesAPI.Services
             _connectionString = configuration["appSettings:storageConnectionString"];
         }
 
-        public string BlobCreateTest(string filePath)
-        {
-            string container = "ddd";
-            if (System.IO.File.Exists(filePath))
-            {
-                BlobContainerClient blobContainerClient = new BlobContainerClient(_connectionString, container);
-                blobContainerClient.CreateIfNotExists();
-                blobContainerClient.SetAccessPolicy(Azure.Storage.Blobs.Models.PublicAccessType.Blob);
-
-                BlobClient blobClient = blobContainerClient.GetBlobClient(Path.GetFileName(filePath));
-
-
-                blobClient.Upload(filePath);
-
-                return blobClient.Uri.ToString();
-            }
-
-            return "File Path incorrect ziomus";
-        }
-
-        public string BlobCreateTest(IFormFile file)
-        {
-            string container = "ddd";
-            if (file!=null)
-            {
-                BlobContainerClient blobContainerClient = new BlobContainerClient(_connectionString, container);
-                blobContainerClient.CreateIfNotExists();
-                blobContainerClient.SetAccessPolicy(Azure.Storage.Blobs.Models.PublicAccessType.Blob);
-
-                BlobClient blobClient = blobContainerClient.GetBlobClient(file.FileName);
-                blobClient.Upload(file.OpenReadStream());
-
-               // blobClient.Upload(filePath);
-               
-                return blobClient.Uri.ToString();
-            }
-
-            return "File Path incorrect ziomus";
-        }
+       //public string BlobCreateTest(string filePath)
+       //{
+       //    string container = "ddd";
+       //    if (System.IO.File.Exists(filePath))
+       //    {
+       //        BlobContainerClient blobContainerClient = new BlobContainerClient(_connectionString, container);
+       //        blobContainerClient.CreateIfNotExists();
+       //        blobContainerClient.SetAccessPolicy(Azure.Storage.Blobs.Models.PublicAccessType.Blob);
+       //
+       //        BlobClient blobClient = blobContainerClient.GetBlobClient(Path.GetFileName(filePath));
+       //
+       //
+       //        blobClient.Upload(filePath);
+       //
+       //        return blobClient.Uri.ToString();
+       //    }
+       //
+       //    return "File Path incorrect ziomus";
+       //}
+       //
+       //public string BlobCreateTest(IFormFile file)
+       //{
+       //    string container = "ddd";
+       //    if (file!=null)
+       //    {
+       //        BlobContainerClient blobContainerClient = new BlobContainerClient(_connectionString, container);
+       //        blobContainerClient.CreateIfNotExists();
+       //        blobContainerClient.SetAccessPolicy(Azure.Storage.Blobs.Models.PublicAccessType.Blob);
+       //
+       //        BlobClient blobClient = blobContainerClient.GetBlobClient(file.FileName);
+       //        blobClient.Upload(file.OpenReadStream());
+       //
+       //       // blobClient.Upload(filePath);
+       //       
+       //        return blobClient.Uri.ToString();
+       //    }
+       //
+       //    return "File Path incorrect ziomus";
+       //}
 
         private bool CheckIfFileExist(string fileName)
         {

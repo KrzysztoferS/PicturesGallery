@@ -28,8 +28,8 @@ namespace PicturesAPI.Controllers
 
         [HttpGet("{email}")]
         public ActionResult<IEnumerable<UserDTO>> GetUser(string email)
-        {
-            return _dbContext.Users.Where(u => u.email.Equals(email)).Select(e => new UserDTO
+        { 
+            return  _dbContext.Users.Where(u => u.email.Equals(email)).Select(e => new UserDTO
             {
                 email = e.email,
                 Name = e.Name,
@@ -40,7 +40,7 @@ namespace PicturesAPI.Controllers
         }
 
         [HttpPost]
-        public ActionResult<Guid> PostUser([FromBody]UserDTO value)
+        public async Task<ActionResult<Guid>> PostUser([FromBody]UserDTO value)
         {
             Guid id = Guid.NewGuid();
 
@@ -52,7 +52,7 @@ namespace PicturesAPI.Controllers
                 Password=value.Password,
 
             });
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
             return id;
         }
 
@@ -65,6 +65,13 @@ namespace PicturesAPI.Controllers
                 //TODO dopisac mapowanie na tego usera
             }
         }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteUser()
+        {
+            //TODO
+            return Ok("Juser wywalony");
+        } 
         
     }
 }

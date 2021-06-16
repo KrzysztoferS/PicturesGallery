@@ -15,7 +15,7 @@ namespace PicturesAPI.Controllers
     [Route("api/[controller]")]
     [Produces("application/json")]
     [ApiController]
-    public class PictureController:ControllerBase
+    public class PictureController : ControllerBase
     {
         DatabaseContext _dbContext;
         IFileSaver _fileSaver;
@@ -36,37 +36,37 @@ namespace PicturesAPI.Controllers
         //}
 
         //old version of post without physicall file.
-       //[HttpPost("{userEmail}")]
-       //public ActionResult<Guid> PostPicture([FromBody] PictureDTO pictureDTO, string userEmail)
-       //{
-       //    Guid id = Guid.NewGuid();
-       //
-       //    User user = _dbContext.Users.Where(c => c.email == userEmail).FirstOrDefault();
-       //    if (user != null)
-       //    {
-       //        Picture picture = new Picture
-       //        {
-       //            Url = pictureDTO.Url,
-       //            Description = pictureDTO.Description,
-       //            Tags = pictureDTO.Tags,
-       //            Title = pictureDTO.Title,
-       //            DateAdded = DateTime.Now
-       //        };
-       //
-       //        picture.OwnerId = user.Id;
-       //
-       //        if (user.Pictures == null) user.Pictures = new List<Picture>();
-       //        user.Pictures.Add(picture);
-       //        _dbContext.SaveChanges();
-       //
-       //        return id;
-       //    }
-       //    return null;
-       //}
+        //[HttpPost("{userEmail}")]
+        //public ActionResult<Guid> PostPicture([FromBody] PictureDTO pictureDTO, string userEmail)
+        //{
+        //    Guid id = Guid.NewGuid();
+        //
+        //    User user = _dbContext.Users.Where(c => c.email == userEmail).FirstOrDefault();
+        //    if (user != null)
+        //    {
+        //        Picture picture = new Picture
+        //        {
+        //            Url = pictureDTO.Url,
+        //            Description = pictureDTO.Description,
+        //            Tags = pictureDTO.Tags,
+        //            Title = pictureDTO.Title,
+        //            DateAdded = DateTime.Now
+        //        };
+        //
+        //        picture.OwnerId = user.Id;
+        //
+        //        if (user.Pictures == null) user.Pictures = new List<Picture>();
+        //        user.Pictures.Add(picture);
+        //        _dbContext.SaveChanges();
+        //
+        //        return id;
+        //    }
+        //    return null;
+        //}
 
-       [HttpPost("{userEmail}")]
-       public async Task<IActionResult> PostPicture([FromForm] PictureDTO picture, string userEmail)
-       {
+        [HttpPost("{userEmail}")]
+        public async Task<IActionResult> PostPicture([FromForm] PictureDTO picture, string userEmail)
+        {
             //Sprawdza czy uzytkownik o podanym mailu istnieje
             User user = _dbContext.Users.Where(e => e.email == userEmail).FirstOrDefault();
             if (user == null) return Problem("User not found");
@@ -90,27 +90,27 @@ namespace PicturesAPI.Controllers
                 _dbContext.Pictures.Add(_picture);
                 await _dbContext.SaveChangesAsync();
 
-                return Ok(new { filePath });
+                return Ok(filePath);
             }
             else return Problem("No picture file provided");
-       }
-
-        [HttpPost("Azure")]
-        public async Task<IActionResult> PostPictureToAzure( string filePath)
-        {
-            AzureBlobService storage = new AzureBlobService();
-            string  _filePath =@$"{storage.BlobCreateTest(filePath)}";
-            
-            return Ok(_filePath);
         }
 
-        [HttpPost("AzureFile")]
-        public async Task<IActionResult> PostFile(IFormFile file)
-        {
-            AzureBlobService storage = new AzureBlobService();
-            string link=storage.BlobCreateTest(file);
-            return Ok(link);
-        }
+       //[HttpPost("Azure")]
+       //public async Task<IActionResult> PostPictureToAzure(string filePath)
+       //{
+       //    AzureBlobService storage = new AzureBlobService();
+       //    string _filePath = @$"{storage.BlobCreateTest(filePath)}";
+       //
+       //    return Ok(_filePath);
+       //}
+       //
+       //[HttpPost("AzureFile")]
+       //public async Task<IActionResult> PostFile(IFormFile file)
+       //{
+       //    AzureBlobService storage = new AzureBlobService();
+       //    string link = storage.BlobCreateTest(file);
+       //    return Ok(link);
+       //}
 
         [HttpGet("{userEmail}")]
         public ActionResult<IEnumerable<Picture>> GetUserPictures(string userEmail)
@@ -125,6 +125,19 @@ namespace PicturesAPI.Controllers
                 return picList;
             }
             else return null;
+        }
+
+        [HttpDelete("{userEmail}")]
+        public async Task<IActionResult> DeletePictures(string fileName, string userEmail)
+        {
+            //TODO
+            return Ok("usuniety pikczer") ;
+        }
+
+        [HttpPut("{userEmail}")]
+        public async Task<IActionResult> PutPicture([FromBody] PutPictureDTO picture)
+        {
+            return Ok("Pikczer updejtniety");
         }
     }
 }

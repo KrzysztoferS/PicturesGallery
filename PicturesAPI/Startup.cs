@@ -29,7 +29,7 @@ namespace PicturesAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),b=> b.MigrationsAssembly("Database")));
-            services.AddSingleton<IFileSaver>(e => new FileSaverLocallyService());
+            services.AddSingleton<IFileSaver>(e => new AzureBlobService());
             services.AddControllers();
 
             services.AddSwaggerGen(c =>

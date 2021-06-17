@@ -9,6 +9,7 @@ namespace PicturesAPI.Abstraction
     public interface IFileSaver
     {
         //saves files and returns url
-        Task<string> SaveFile(IFormFile file, string name); 
+        Task<string> SaveFile(IFormFile file, string name);
+        Task<string> DeleteFile(string url, string ownerId);
     }
 }

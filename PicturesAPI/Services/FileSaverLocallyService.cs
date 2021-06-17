@@ -10,6 +10,16 @@ namespace PicturesAPI.Services
 {
     public class FileSaverLocallyService : IFileSaver
     {
+        public Task<string> DeleteFile(string url)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<string> DeleteFile(string url, string ownerId)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<string> SaveFile(IFormFile file, string ownerId)
         {
             if (file != null)

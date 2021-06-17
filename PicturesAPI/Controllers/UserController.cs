@@ -40,7 +40,7 @@ namespace PicturesAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Guid>> PostUser([FromBody]UserDTO value)
+        public async Task<IActionResult> PostUser([FromBody]UserDTO value)
         {
             Guid id = Guid.NewGuid();
 
@@ -52,8 +52,9 @@ namespace PicturesAPI.Controllers
                 Password=value.Password,
 
             });
-            await _dbContext.SaveChangesAsync();
-            return id;
+            _dbContext.SaveChanges();
+
+            return Ok(id.ToString());
         }
 
         [HttpPut("{id}")]

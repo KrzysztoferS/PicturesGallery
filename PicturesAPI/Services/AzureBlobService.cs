@@ -87,5 +87,30 @@ namespace PicturesAPI.Services
         {
             return true;
         }
+
+        public async Task<string> DeleteFile(string url, string ownerId)
+        {
+            
+            BlobServiceClient blobServiceClient = new BlobServiceClient(_connectionString);
+
+            //var container = new BlobContainerClient(_connectionString, ownerId);
+            
+
+            BlobContainerClient blobContainerClient = blobServiceClient.GetBlobContainerClient(ownerId);
+            //var blobList = blobContainerClient.GetBlobs();
+            var blobToDelete = blobContainerClient.GetBlobClient(Path.GetFileName(url));
+
+            if (blobToDelete != null)
+            {
+                blobContainerClient.DeleteBlob(blobToDelete.Name);
+                return "Blob DELETED";
+            } else
+            {
+                throw new NotImplementedException();
+            }
+
+            
+            
+        }
     }
 }

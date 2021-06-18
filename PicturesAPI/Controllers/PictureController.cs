@@ -76,6 +76,7 @@ namespace PicturesAPI.Controllers
             {
                 Guid id = Guid.NewGuid();
                 string filePath = await _fileSaver.SaveFile(picture.File, user.Id.ToString());
+                if (filePath != "Error") { 
                 Picture _picture = new Picture
                 {
                     Id = id,
@@ -91,6 +92,7 @@ namespace PicturesAPI.Controllers
                 await _dbContext.SaveChangesAsync();
 
                 return Ok(filePath);
+                } return Problem("Cannot add new picture");
             }
             else return Problem("No picture file provided");
         }
@@ -142,8 +144,6 @@ namespace PicturesAPI.Controllers
                 return Ok("File removed!");
             }
             else return Problem("Picture not found");
-
-            
         }
 
         [HttpPut("{userEmail}")]

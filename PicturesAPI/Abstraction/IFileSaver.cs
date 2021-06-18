@@ -10,6 +10,6 @@ namespace PicturesAPI.Abstraction
     {
         //saves files and returns url
         Task<string> SaveFile(IFormFile file, string name);
-        Task<string> DeleteFile(string url, string ownerId);
+        Task<bool> DeleteFile(string url, string ownerId);
     }
 }

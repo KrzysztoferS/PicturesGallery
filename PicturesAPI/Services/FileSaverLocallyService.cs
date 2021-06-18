@@ -10,12 +10,12 @@ namespace PicturesAPI.Services
 {
     public class FileSaverLocallyService : IFileSaver
     {
-        public Task<string> DeleteFile(string url)
+        public Task<bool> DeleteFile(string url)
         {
             throw new NotImplementedException();
         }
 
-        public Task<string> DeleteFile(string url, string ownerId)
+        public Task<bool> DeleteFile(string url, string ownerId)
         {
             throw new NotImplementedException();
         }

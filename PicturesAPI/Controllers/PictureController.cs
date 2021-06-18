@@ -130,12 +130,12 @@ namespace PicturesAPI.Controllers
         }
 
         [HttpDelete("{userEmail}")]
-        public async Task<IActionResult> DeletePictures(Guid pictureId, string userEmail)
+        public async Task<IActionResult> DeletePictures(string pictureId, string userEmail)
         {
             User user = _dbContext.Users.Where(e => e.email == userEmail).FirstOrDefault();
             if (user == null) return Problem("User not found");
 
-            Picture picture = _dbContext.Pictures.Where(e => e.Id == pictureId).FirstOrDefault();
+            Picture picture = _dbContext.Pictures.Where(e => e.Id.ToString() == pictureId).FirstOrDefault();
             if (picture != null  && picture.OwnerId==user.Id)
             {
                await _fileSaver.DeleteFile(picture.Url, picture.OwnerId.ToString());

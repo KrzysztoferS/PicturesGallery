@@ -42,36 +42,51 @@ namespace PicturesAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> PostUser([FromBody]UserDTO value)
         {
-            Guid id = Guid.NewGuid();
+            var user = GetUser(value.email);
 
-            _dbContext.Users.Add(new Database.User
-            {
-                Id = id,
-                email = value.email,
-                Name = value.Name,
-                Password=value.Password,
+            if (user.Value.Count()==0)
+            { 
+                Guid id = Guid.NewGuid();
 
-            });
-            _dbContext.SaveChanges();
+                _dbContext.Users.Add(new Database.User
+                {
+                    Id = id,
+                    email = value.email,
+                    Name = value.Name,
+                    Password = value.Password,
+                });
 
-            return Ok(id.ToString());
-        }
+                _dbContext.SaveChanges();
 
-        [HttpPut("{id}")]
-        public void PutUser(Guid id, [FromBody] UserDTO value)
-        {
-            var entity = _dbContext.Users.SingleOrDefault(e => e.Id == id);
-            if (entity != null)
-            {
-                //TODO dopisac mapowanie na tego usera
+                return Ok(id.ToString());
             }
+            else return Problem("User Exist");
         }
+
+       //[HttpPut("{id}")]
+       //public void PutUser(Guid id, [FromBody] UserDTO value)
+       //{
+       //    var entity = _dbContext.Users.SingleOrDefault(e => e.Id == id);
+       //    if (entity != null)
+       //    {
+       //        //TODO dopisac mapowanie na tego usera
+       //    }
+       //}
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser()
+        public async Task<IActionResult> DeleteUser(Guid id)
         {
-            //TODO
-            return Ok("Juser wywalony");
+            
+          var entity = _dbContext.Users.SingleOrDefault(e => e.Id == id);
+          if (entity != null)
+          {
+
+
+
+                return Ok("User deleted");
+          }
+
+            return Problem("User not deleted");
         } 
         
     }

@@ -1,4 +1,6 @@
-﻿using Azure.Storage.Blobs;
+﻿using Azure;
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using PicturesAPI.Abstraction;
@@ -68,6 +70,23 @@ namespace PicturesAPI.Services
 
             
             
+        }
+
+        public async Task<bool> DeleteContainer(string ownerId)
+        {
+            BlobServiceClient blobServiceClient = new BlobServiceClient(_connectionString);
+            Pageable<BlobContainerItem> containers=blobServiceClient.GetBlobContainers();
+
+            foreach(var container in containers)
+            {
+                if (container.Name == ownerId)
+                {
+                   Response response= blobServiceClient.DeleteBlobContainer(container.Name);
+                   return true;
+                }
+            }
+
+            return false;
         }
     }
 }

@@ -72,21 +72,23 @@ namespace PicturesAPI.Services
             
         }
 
-        public async Task<bool> DeleteContainer(string ownerId)
+        public void DeleteContainer(string ownerId)
         {
             BlobServiceClient blobServiceClient = new BlobServiceClient(_connectionString);
             Pageable<BlobContainerItem> containers=blobServiceClient.GetBlobContainers();
-
+            
             foreach(var container in containers)
             {
-                if (container.Name == ownerId)
-                {
+               if (container.Name == ownerId)
+               {
                    Response response= blobServiceClient.DeleteBlobContainer(container.Name);
-                   return true;
-                }
+
+                    return;
+               }
             }
 
-            return false;
+            
+            
         }
     }
 }

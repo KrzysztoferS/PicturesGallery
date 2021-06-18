@@ -1,6 +1,7 @@
 ﻿using Database;
 using Microsoft.AspNetCore.Mvc;
 using PicturesAPI.Models;
+using PicturesAPI.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -80,10 +81,13 @@ namespace PicturesAPI.Controllers
           var entity = _dbContext.Users.SingleOrDefault(e => e.Id == id);
           if (entity != null)
           {
-
-
-
+                AzureBlobService azureService = new AzureBlobService();
+                azureService.DeleteContainer(id.ToString());
+              
+                _dbContext.Remove(entity);
+                await _dbContext.SaveChangesAsync();
                 return Ok("User deleted");
+                
           }
 
             return Problem("User not deleted");

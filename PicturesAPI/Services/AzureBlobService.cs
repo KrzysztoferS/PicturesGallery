@@ -34,9 +34,9 @@ namespace PicturesAPI.Services
                 BlobContainerClient blobContainerClient = new BlobContainerClient(_connectionString, container);
                 blobContainerClient.CreateIfNotExists();
                 blobContainerClient.SetAccessPolicy(Azure.Storage.Blobs.Models.PublicAccessType.Blob);
-
                 
-                BlobClient blobClient = blobContainerClient.GetBlobClient(file.FileName);
+                
+                BlobClient blobClient = blobContainerClient.GetBlobClient(Path.GetRandomFileName());
                 bool exists=await blobClient.ExistsAsync();
                 if (!exists)
                 {
